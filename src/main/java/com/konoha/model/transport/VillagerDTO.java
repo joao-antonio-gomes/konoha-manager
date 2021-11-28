@@ -2,6 +2,7 @@ package com.konoha.model.transport;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class VillagerDTO {
@@ -11,7 +12,8 @@ public class VillagerDTO {
     private BigDecimal cost;
     private BigInteger id;
 
-    public VillagerDTO(String name, String surname, BigInteger age, BigDecimal cost) {
+    public VillagerDTO(BigInteger id, String name, String surname, BigInteger age, BigDecimal cost) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;

@@ -1,6 +1,5 @@
-package com.konoha.configuration;
+package com.konoha.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
@@ -8,8 +7,7 @@ import java.math.BigDecimal;
 @Configuration
 public class KonohaConfiguration {
 
-    @Value("${budget}")
-    private static BigDecimal budget;
+    private static BigDecimal budget = new BigDecimal(5000);
 
     public BigDecimal getBudget() {
         return budget;

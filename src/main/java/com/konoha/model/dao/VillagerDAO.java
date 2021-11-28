@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public class VillagerDAO {
     public static List<VillagerDTO> villagers = Arrays.asList(
-            new VillagerDTO("João", "Gomes", new BigInteger("24"), new BigDecimal(50.0)),
-            new VillagerDTO("Andriele", "Portela", new BigInteger("22"), new BigDecimal(25.0)),
-            new VillagerDTO("Geruza", "Prim", new BigInteger("19"), new BigDecimal(30.0))
+            new VillagerDTO(new BigInteger("1"), "João", "Gomes", new BigInteger("24"), new BigDecimal("50.0")),
+            new VillagerDTO(new BigInteger("2"), "Andriele", "Portela", new BigInteger("22"), new BigDecimal("25.0")),
+            new VillagerDTO(new BigInteger("3"), "Geruza", "Prim", new BigInteger("19"), new BigDecimal("30.0"))
     );
 
 
