@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "konoha.budget",
-      "type": "java.lang.String",
-      "description": "Description for konoha.budget."
-  }
-] }
