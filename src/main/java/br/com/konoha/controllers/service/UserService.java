@@ -1,6 +1,6 @@
 package br.com.konoha.controllers.service;
 
-import br.com.konoha.model.dao.User;
+import br.com.konoha.model.transport.UserDTO;
 import br.com.konoha.model.dao.UserSpringSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,11 +20,11 @@ public class UserService implements UserDetailsService {
 		this.userDAO = userDAO;
 	}
 	
-	public void updateUser(User user) {
+	public void updateUser(UserDTO user) {
 		userDAO.updateUser(user);
 	}
 
-	public User getUser(String email) {
+	public UserDTO getUser(String email) {
 		return userDAO.getUser(email);
 	}
 
@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = getUser(username);
+		UserDTO user = getUser(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}

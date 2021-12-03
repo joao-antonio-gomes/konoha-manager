@@ -1,10 +1,10 @@
-package br.com.konoha.model.dao;
+package br.com.konoha.model.transport;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class User {
+public class UserDTO {
 
 	private String email;
 
@@ -12,15 +12,15 @@ public class User {
 
 	private Set<String> roles = new HashSet<>();
 
-	public User(String email) {
+	public UserDTO(String email) {
 		this.email = email;
 	}
-	public User(String email, String password) {
+	public UserDTO(String email, String password) {
 		this(email);
 		this.password = password;
 	}
 
-	public User(String email, String password, Set<String> roles) {
+	public UserDTO(String email, String password, Set<String> roles) {
 		this(email, password);
 		this.roles = roles;
 	}
@@ -62,7 +62,7 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		UserDTO other = (UserDTO) obj;
 		return Objects.equals(email, other.email);
 	}
 

@@ -4,16 +4,17 @@ import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
 
+
 @Configuration
 public class KonohaConfiguration {
 
-    private static BigDecimal budget = new BigDecimal(5000);
+    private static Double budget = 5000.0;
 
-    public BigDecimal getBudget() {
+    public Double getBudget() {
         return budget;
     }
 
-    public void setBudget(BigDecimal budget) {
-        this.budget = budget;
+    public void setBudget(Double budget) {
+        KonohaConfiguration.budget = budget;
     }
 }

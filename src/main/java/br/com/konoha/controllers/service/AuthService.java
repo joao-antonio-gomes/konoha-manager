@@ -2,7 +2,7 @@ package br.com.konoha.controllers.service;
 
 import java.util.Random;
 
-import br.com.konoha.model.dao.User;
+import br.com.konoha.model.transport.UserDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class AuthService {
 	}
 
 	public void sendNewPass(String email)  {
-		User user = userService.getUser(email);
+		UserDTO user = userService.getUser(email);
 		if(user == null) {
 			throw new RuntimeException("Email not found.");
 		}

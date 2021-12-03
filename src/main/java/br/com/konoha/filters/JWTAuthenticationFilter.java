@@ -1,17 +1,12 @@
 package br.com.konoha.filters;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import br.com.konoha.model.dao.UserSpringSecurity;
+import br.com.konoha.model.transport.CredentialsDTO;
+import br.com.konoha.model.transport.JwtDTO;
 import br.com.konoha.util.JWTUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,10 +14,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.konoha.model.transport.CredentialsDTO;
-import br.com.konoha.model.transport.JwtDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -52,7 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-			Authentication authResult) throws IOException, ServletException {
+											Authentication authResult) throws IOException, ServletException {
 		String email = ((UserSpringSecurity) authResult.getPrincipal()).getUsername();
 		JwtDTO generateToken = jwtUtil.generateToken(email);
 
@@ -64,19 +63,19 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		@Override
 		public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-				AuthenticationException exception) throws IOException, ServletException {
+											AuthenticationException exception) throws IOException, ServletException {
 			response.setStatus(401);
 			response.setContentType("application/json");
 			response.getWriter().append(json());
 		}
 
 		private String json() {
-			
+
 			long date = new Date().getTime();
-			return "{\"timestamp\": " + date + ", " 
-					+ "\"status\": 401, " 
+			return "{\"timestamp\": " + date + ", "
+					+ "\"status\": 401, "
 					+ "\"error\": \"Não autorizado\", "
-					+ "\"message\": \"Email ou senha inválidos\", " 
+					+ "\"message\": \"Email ou senha inválidos\", "
 					+ "\"path\": \"/login\"}";
 		}
 	}

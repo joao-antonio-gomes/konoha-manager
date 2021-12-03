@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,24 +27,24 @@ public class VillagerService {
         return villagerDAO.listAllVillagers();
     }
 
-    public BigDecimal totalCost() {
-        List<BigDecimal> costOfEachVillager = new ArrayList<>();
+    public double totalCost() {
+        List<Double> costOfEachVillager = new ArrayList<>();
         for (VillagerDTO villager : villagerDAO.listAllVillagers()) {
             costOfEachVillager.add(villager.getCost());
         }
-        return costOfEachVillager.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
+        return costOfEachVillager.stream().reduce(0.0, Double::sum);
     }
 
     public Map<String, String> getFinancialReport() {
         HashMap<String, String> financialReport = new HashMap<>();
-        BigDecimal totalCost = this.totalCost();
-        BigDecimal budget = new KonohaConfiguration().getBudget();
-        BigDecimal remainingBudget = budget.subtract(totalCost);
+        Double totalCost = this.totalCost();
+        Double budget = new KonohaConfiguration().getBudget();
+        double remainingBudget = budget - totalCost;
         VillagerDTO moreExpensiveVillager = this.getMoreExpensiveVillager();
 
         financialReport.put("totalCost", totalCost.toString());
         financialReport.put("budget", budget.toString());
-        financialReport.put("remainingBudget", remainingBudget.toString());
+        financialReport.put("remainingBudget", Double.toString(remainingBudget));
         financialReport.put("moreExpensiveVillager", moreExpensiveVillager.getName());
         return financialReport;
     }
@@ -68,7 +69,13 @@ public class VillagerService {
 
     public VillagerDTO getMoreExpensiveVillager() {
         List<VillagerDTO> allVillagers = listAllVillagers();
-        VillagerDTO villagerFound = allVillagers.stream().max((villager1, villager2) -> villager1.getCost().compareTo(villager2.getCost())).orElse(null);
-        return villagerFound;
+        return allVillagers.stream().max((villager1, villager2) -> villager1.getCost(). compareTo(villager2.getCost())).orElse(null);
+    }
+
+    public VillagerDTO create(VillagerDTO villager) throws SQLException {
+        if (villager == null) {
+            throw new SQLException("Error creating villager");
+        }
+        return this.villagerDAO.create(villager);
     }
 }

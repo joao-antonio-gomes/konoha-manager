@@ -3,10 +3,12 @@ package br.com.konoha.controllers.rest;
 import br.com.konoha.model.transport.VillagerDTO;
 import br.com.konoha.controllers.service.VillagerService;
 import br.com.konoha.exceptions.VillagerException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +40,7 @@ public class VillagerRest {
 
     @GetMapping("/total-cost")
     public String totalCost() {
-        BigDecimal totalCost = villagerService.totalCost();
+        Double totalCost = villagerService.totalCost();
         return String.format("R$ %.2f", totalCost);
     }
 
@@ -55,5 +57,14 @@ public class VillagerRest {
     @GetMapping("/financial-report")
     public Map<String, String> getFinancialReport() {
         return villagerService.getFinancialReport();
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<VillagerDTO> create(@RequestBody VillagerDTO villager) throws SQLException {
+        VillagerDTO villagerDTO = villagerService.create(villager);
+        if (villagerDTO == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(villagerDTO);
     }
 }

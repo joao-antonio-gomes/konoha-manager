@@ -1,17 +1,15 @@
 package br.com.konoha.model.transport;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public class VillagerDTO {
     private String name;
     private String surname;
-    private BigInteger age;
-    private BigDecimal cost;
-    private BigInteger id;
+    private Integer age;
+    private Double cost;
+    private Integer id;
 
-    public VillagerDTO(BigInteger id, String name, String surname, BigInteger age, BigDecimal cost) {
-        this.id = id;
+    public VillagerDTO(String name, String surname, Integer age, Double cost) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -34,27 +32,27 @@ public class VillagerDTO {
         this.surname = surname;
     }
 
-    public BigInteger getAge() {
-        return age;
+    public Integer getAge() {
+        return this.age;
     }
 
-    public void setAge(BigInteger age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
-    public BigDecimal getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(BigDecimal cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
-    public BigInteger getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

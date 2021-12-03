@@ -2,7 +2,7 @@ package br.com.konoha.controllers.service;
 
 import java.util.Date;
 
-import br.com.konoha.model.dao.User;
+import br.com.konoha.model.transport.UserDTO;
 import org.springframework.mail.SimpleMailMessage;
 
 public abstract class AbstractEmailService implements EmailService {
@@ -14,12 +14,12 @@ public abstract class AbstractEmailService implements EmailService {
 	}
 
 	@Override
-	public void sendNewPassword(User user, String newPass) {
+	public void sendNewPassword(UserDTO user, String newPass) {
 		SimpleMailMessage sm = prepareNewPasswordEmail(user, newPass);
 		sendEmail(sm);
 	}
 
-	protected SimpleMailMessage prepareNewPasswordEmail(User user, String newPass) {
+	protected SimpleMailMessage prepareNewPasswordEmail(UserDTO user, String newPass) {
 		SimpleMailMessage sm = new SimpleMailMessage();
 		sm.setTo(user.getEmail());
 		sm.setFrom(sender);
