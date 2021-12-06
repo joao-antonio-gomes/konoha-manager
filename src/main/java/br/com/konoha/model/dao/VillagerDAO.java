@@ -83,4 +83,23 @@ public class VillagerDAO {
             return totalCost;
         }
     }
+
+    public VillagerDTO getMoreExpensiveVillager() throws SQLException {
+        try (Statement statement = new ConnectionFactoryJDBC().getConnection().createStatement()) {
+            String sql = "SELECT * FROM naruto_manager.villager WHERE vil_cost = (SELECT MAX(vil_cost) FROM naruto_manager.villager)";
+            statement.execute(sql);
+            ResultSet resultSet = statement.getResultSet();
+            VillagerDTO villagerDTO = null;
+            while (resultSet.next()) {
+                villagerDTO = new VillagerDTO(
+                        resultSet.getString("vil_name"),
+                        resultSet.getString("vil_surname"),
+                        resultSet.getInt("vil_age"),
+                        resultSet.getDouble("vil_cost")
+                );
+                villagerDTO.setId(resultSet.getInt("vil_id"));
+            }
+            return villagerDTO;
+        }
+    }
 }

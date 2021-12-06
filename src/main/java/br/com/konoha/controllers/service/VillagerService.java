@@ -41,7 +41,7 @@ public class VillagerService {
         return 0.0;
     }
 
-    public Map<String, String> getFinancialReport() {
+    public Map<String, String> getFinancialReport() throws SQLException {
         HashMap<String, String> financialReport = new HashMap<>();
         Double totalCost = this.totalCost();
         Double budget = new KonohaConfiguration().getBudget();
@@ -72,9 +72,8 @@ public class VillagerService {
         return villagerFound;
     }
 
-    public VillagerDTO getMoreExpensiveVillager() {
-        List<VillagerDTO> allVillagers = listAllVillagers();
-        return allVillagers.stream().max((villager1, villager2) -> villager1.getCost(). compareTo(villager2.getCost())).orElse(null);
+    public VillagerDTO getMoreExpensiveVillager() throws SQLException {
+        return this.villagerDAO.getMoreExpensiveVillager();
     }
 
     public VillagerDTO create(VillagerDTO villager) throws SQLException {

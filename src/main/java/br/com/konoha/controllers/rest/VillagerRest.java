@@ -55,7 +55,7 @@ public class VillagerRest {
     }
 
     @GetMapping("/financial-report")
-    public Map<String, String> getFinancialReport() {
+    public Map<String, String> getFinancialReport() throws SQLException {
         return villagerService.getFinancialReport();
     }
 
