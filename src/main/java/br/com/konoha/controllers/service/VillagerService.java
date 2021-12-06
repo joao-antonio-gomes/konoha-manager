@@ -59,9 +59,8 @@ public class VillagerService {
         return financialReport;
     }
 
-    public VillagerDTO getVillagerById(BigInteger id) throws VillagerException {
-        List<VillagerDTO> allVillagers = listAllVillagers();
-        VillagerDTO villagerFound = allVillagers.stream().filter(villager -> villager.getId().equals(id)).findFirst().orElse(null);
+    public VillagerDTO getVillagerById(BigInteger id) throws VillagerException, SQLException {
+        VillagerDTO villagerFound = this.villagerDAO.getVillagerById(id);
         if (villagerFound == null) {
             throw new VillagerException("Villager not found");
         }

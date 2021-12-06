@@ -28,7 +28,7 @@ public class VillagerRest {
     }
 
     @GetMapping("/{id}")
-    public VillagerDTO getVillagerById(@PathVariable("id") long id) {
+    public VillagerDTO getVillagerById(@PathVariable("id") long id) throws SQLException {
         try {
             BigInteger bigId = BigInteger.valueOf(id);
             return villagerService.getVillagerById(bigId);
@@ -44,7 +44,7 @@ public class VillagerRest {
         return String.format("R$ %.2f", totalCost);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search-by-name")
     public VillagerDTO searchVillagerByName(@RequestParam("name") String name) {
         try {
             return villagerService.getVillagerByName(name);
