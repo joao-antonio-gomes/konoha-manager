@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,14 +32,23 @@ public class VillagerDAO {
         return villagerDTO;
     }
 
-    public static List<VillagerDTO> villagers = Arrays.asList(
-            new VillagerDTO("João", "Gomes", 24, 50.0),
-            new VillagerDTO("Andriele", "Portela", 22, 25.0),
-            new VillagerDTO("Geruza", "Prim", 19, 30.0)
-    );
-
-
-    public List<VillagerDTO> listAllVillagers() {
-        return villagers;
+    public List<VillagerDTO> listAllVillagers() throws SQLException {
+        try (Statement statement = new ConnectionFactoryJDBC().getConnection().createStatement()) {
+            String sql = "SELECT * FROM naruto_manager.villager";
+            statement.execute(sql);
+            ResultSet resultSet = statement.getResultSet();
+            List<VillagerDTO> villagerDTOS = new ArrayList<>();
+            while (resultSet.next()) {
+                VillagerDTO villagerDTO = new VillagerDTO(
+                        resultSet.getString("vil_name"),
+                        resultSet.getString("vil_surname"),
+                        resultSet.getInt("vil_age"),
+                        resultSet.getDouble("vil_cost")
+                );
+                villagerDTO.setId(resultSet.getInt("vil_id"));
+                villagerDTOS.add(villagerDTO);
+            }
+            return villagerDTOS;
+        }
     }
 }

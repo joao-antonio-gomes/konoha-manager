@@ -24,15 +24,25 @@ public class VillagerService {
     }
 
     public List<VillagerDTO> listAllVillagers() {
-        return villagerDAO.listAllVillagers();
+        try {
+            return villagerDAO.listAllVillagers();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public double totalCost() {
         List<Double> costOfEachVillager = new ArrayList<>();
-        for (VillagerDTO villager : villagerDAO.listAllVillagers()) {
-            costOfEachVillager.add(villager.getCost());
+        try {
+            for (VillagerDTO villager : villagerDAO.listAllVillagers()) {
+                costOfEachVillager.add(villager.getCost());
+            }
+            return costOfEachVillager.stream().reduce(0.0, Double::sum);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return costOfEachVillager.stream().reduce(0.0, Double::sum);
+        return 0.0;
     }
 
     public Map<String, String> getFinancialReport() {
