@@ -33,12 +33,8 @@ public class VillagerService {
     }
 
     public double totalCost() {
-        List<Double> costOfEachVillager = new ArrayList<>();
         try {
-            for (VillagerDTO villager : villagerDAO.listAllVillagers()) {
-                costOfEachVillager.add(villager.getCost());
-            }
-            return costOfEachVillager.stream().reduce(0.0, Double::sum);
+            return this.villagerDAO.totalCost();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -70,4 +70,17 @@ public class VillagerDAO {
             return villagerDTO;
         }
     }
+
+    public double totalCost() throws SQLException {
+        try (Statement statement = new ConnectionFactoryJDBC().getConnection().createStatement()) {
+            String sql = "SELECT SUM(vil_cost) FROM naruto_manager.villager";
+            statement.execute(sql);
+            ResultSet resultSet = statement.getResultSet();
+            double totalCost = 0;
+            while (resultSet.next()) {
+                totalCost = resultSet.getDouble(1);
+            }
+            return totalCost;
+        }
+    }
 }
